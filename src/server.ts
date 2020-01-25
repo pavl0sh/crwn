@@ -1,9 +1,7 @@
-import express from "express";
+import "dotenv/config";
+import App from "./app";
+import ExampleController from "./controllers/example/example.controller";
 
-const app = express();
+const app = new App([new ExampleController()], 5000);
 
-app.get("/", (request, response) => {
-  response.send("Hello World");
-});
-
-app.listen(5000, () => console.log("Server is running"));
+app.listen();
