@@ -10,5 +10,11 @@ module.exports =  {
       sourceType:  'module',  // Allows for the use of imports
     },
   
-    rules: {}
+    rules: {
+        "max-len": ["error", { "code": 130 }],
+        "object-curly-newline": ["error", {
+            "minProperties": 6,
+            "consistent": true
+        }]
+    }
   };

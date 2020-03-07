@@ -1,6 +1,6 @@
 import express from "express";
-import Example from "../../interfaces/example.interface";
-import Controller from "../../interfaces/controller.interface";
+import Example from "../interfaces/example.interface";
+import Controller from "../interfaces/controller.interface";
 
 class ExampleController implements Controller {
   public path = "/example";
@@ -18,7 +18,7 @@ class ExampleController implements Controller {
     this.intializeRoutes();
   }
 
-  public intializeRoutes(): void {
+  private intializeRoutes(): void {
     this.router.get(this.path);
   }
 

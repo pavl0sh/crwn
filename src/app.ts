@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import errorMiddleware from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
 import DbConnection from "./interfaces/dbConnection.interface";
 
@@ -16,6 +17,7 @@ class App {
     this.db.connect();
     this.initializeMiddleware();
     this.initializeControllers(controllers);
+    this.initializeErrorHandling();
   }
 
   private initializeMiddleware(): void {
@@ -27,6 +29,10 @@ class App {
         parameterLimit: 1000
       })
     );
+  }
+
+  private initializeErrorHandling(): void {
+    this.app.use(errorMiddleware);
   }
 
   private initializeControllers(controllers: Controller[]): void {
