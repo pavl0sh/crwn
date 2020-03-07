@@ -1,23 +1,32 @@
 import express from "express";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import Controller from "./interfaces/controller.interface";
+import DbConnection from "./interfaces/dbConnection.interface";
 
 class App {
   public app: express.Application;
   public port: number;
+  public db: DbConnection;
 
-  constructor(controllers: Controller[], port: number) {
+  constructor(controllers: Controller[], port: number, db: DbConnection) {
     this.app = express();
     this.port = port;
+    this.db = db;
 
-    this.connectToDB();
-    this.initializeMiddlewares();
+    this.db.connect();
+    this.initializeMiddleware();
     this.initializeControllers(controllers);
   }
 
-  private initializeMiddlewares(): void {
-    this.app.use(bodyParser.json());
+  private initializeMiddleware(): void {
+    this.app.use(bodyParser.json({ limit: "1mb" }));
+    this.app.use(
+      bodyParser.urlencoded({
+        limit: "1mb",
+        extended: true,
+        parameterLimit: 1000
+      })
+    );
   }
 
   private initializeControllers(controllers: Controller[]): void {
@@ -30,17 +39,6 @@ class App {
     this.app.listen(this.port, () => {
       console.log(`App listening on the port ${this.port}`);
     });
-  }
-
-  private connectToDB(): void {
-    const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
-    mongoose
-      .connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true
-      })
-      .then(() => console.log("DB connected"))
-      .catch(err => console.log(`DB Connection Error: ${err.message}`));
   }
 }
 
