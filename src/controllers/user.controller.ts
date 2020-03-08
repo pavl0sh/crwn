@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import Controller from "../interfaces/controller.interface";
 import userModel from "../models/user.model";
 
