@@ -1,13 +1,18 @@
 import userModel from "../models/user.model";
 import User from "../interfaces/user.interface";
 import CreateUserDto from "../dto/user.dto";
+import toObjectId from "../helpers/mongoose.helper";
 
 class UserService {
   private user = userModel;
 
   public getUserById = async (id: string): Promise<User | null> => {
-    const result: User | null = await this.user.findById(id);
-    return result;
+    try {
+      const result: User | null = await this.user.findById(toObjectId(id));
+      return result;
+    } catch (error) {
+      return null;
+    }
   };
 
   public getUserByEmail = async (email: string): Promise<User | null> => {
