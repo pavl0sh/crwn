@@ -9,6 +9,9 @@ class CreateUserDto {
   public lastName: string;
 
   @IsString()
+  public username: string;
+
+  @IsString()
   public email: string;
 
   @IsString()

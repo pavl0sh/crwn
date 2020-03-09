@@ -3,6 +3,8 @@ import Controller from "../interfaces/controller.interface";
 import CreateUserDto from "../dto/user.dto";
 import AuthService from "../services/auth.service";
 import validationMiddleware from "../middleware/validation.middleware";
+import AuthResult from "../interfaces/authResult.interface";
+import LogInDto from "../dto/logIn.dto";
 
 class AuthenticationController implements Controller {
   public path = "/auth";
@@ -19,7 +21,12 @@ class AuthenticationController implements Controller {
       validationMiddleware(CreateUserDto),
       this.registration
     );
-    this.router.post(`${this.path}/login`);
+    this.router.post(
+      `${this.path}/login`,
+      validationMiddleware(LogInDto),
+      this.logIn
+    );
+    this.router.post(`${this.path}/logout`, this.logOut);
   }
 
   private registration = async (
@@ -29,12 +36,34 @@ class AuthenticationController implements Controller {
   ): Promise<void> => {
     const userData: CreateUserDto = request.body;
     try {
-      const { cookie, createdUser } = await this.authService.register(userData);
-      response.setHeader("Set-Cookie", [cookie]);
-      response.send(createdUser);
+      const authResult: AuthResult = await this.authService.register(userData);
+      response.setHeader("Set-Cookie", [authResult.cookie]);
+      response.send(authResult.user);
     } catch (error) {
       next(error);
     }
+  };
+
+  private logIn = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    const logInData: LogInDto = request.body;
+    try {
+      const authResult: AuthResult = await this.authService.loggingIn(
+        logInData
+      );
+      response.setHeader("Set-Cookie", [authResult.cookie]);
+      response.send(authResult.user);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  private logOut = (request: Request, response: Response): void => {
+    response.setHeader("Set-Cookie", ["Authorization=;Max-age=0"]);
+    response.send(200);
   };
 }
 
