@@ -12,14 +12,16 @@ class CategoryService {
     return categories;
   };
 
-  public getCategoryById = async (id: string): Promise<Category | null> => {
+  public getCategoryById = async (
+    id: string
+  ): Promise<Category | null | CategoryNotFoundException> => {
     try {
       const result: Category | null = await this.category.findById(
         toObjectId(id)
       );
       return result;
     } catch (error) {
-      return null;
+      throw new CategoryNotFoundException(id);
     }
   };
 
