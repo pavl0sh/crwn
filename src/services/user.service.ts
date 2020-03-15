@@ -26,7 +26,7 @@ class UserService {
     const userResult = await this.user.findOne({ email: email });
     userResult?.get("password", null, { getters: false });
     return userResult;
-  }
+  };
 
   public createUser = async (
     user: CreateUserDto,

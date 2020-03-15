@@ -21,22 +21,23 @@ class CategoryService {
       );
       return result;
     } catch (error) {
-      throw new CategoryNotFoundException(id);
+      return null;
     }
   };
 
   public updateCategory = async (
+    id: string,
     categoryData: Category
-  ): Promise<Category | CategoryNotFoundException> => {
-    const result = await this.category.findByIdAndUpdate(
-      categoryData._id,
-      categoryData,
-      { new: true }
-    );
-    if (result) {
+  ): Promise<Category | null | CategoryNotFoundException> => {
+    try {
+      const result = await this.category.findByIdAndUpdate(
+        toObjectId(id),
+        categoryData,
+        { new: true }
+      );
       return result;
-    } else {
-      throw new CategoryNotFoundException(categoryData._id);
+    } catch (error) {
+      throw new CategoryNotFoundException(id);
     }
   };
 
