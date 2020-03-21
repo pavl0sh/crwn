@@ -18,16 +18,20 @@ class CategoryController implements Controller {
   private initializeRoutes(): void {
     this.router.get(`${this.path}`, this.getAllCategories);
     this.router.get(`${this.path}/:id`, this.getCategoryById);
-    this.router.patch(`${this.path}/:id`, validationMiddleware(CreateCategoryDto, true) this.updateCategory);
-    this.router.post(`${this.path}`, validationMiddleware(CreateCategoryDto), this.createCategory);
+    this.router.patch(
+      `${this.path}/:id`,
+      validationMiddleware(CreateCategoryDto, true),
+      this.updateCategory
+    );
+    this.router.post(
+      `${this.path}`,
+      validationMiddleware(CreateCategoryDto),
+      this.createCategory
+    );
     this.router.delete(`${this.path}/:id`, this.deleteCategory);
   }
 
-  private getAllCategories = async (
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ): Promise<void> => {
+  private getAllCategories = async (response: Response): Promise<void> => {
     const result = await this.categoryService.getAllCategories();
     response.send(result);
   };
@@ -66,8 +70,7 @@ class CategoryController implements Controller {
 
   private createCategory = async (
     request: Request,
-    response: Response,
-    next: NextFunction
+    response: Response
   ): Promise<void> => {
     const categoryData: CreateCategoryDto = request.body;
     const result = await this.categoryService.createCategory(categoryData);

@@ -47,7 +47,7 @@ class AuthService {
 
   private createToken(user: User): TokenData {
     const expiresIn = 60 * 60; //hour
-    const secret = process.env.JWT_SECRET!;
+    const secret = process.env.JWT_SECRET;
     const dataStoredInToken = {
       _id: user._id
     };
