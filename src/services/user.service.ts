@@ -23,8 +23,9 @@ class UserService {
   public getUserByEmailWithPassword = async (
     email: string
   ): Promise<User | null> => {
-    const userResult = await this.user.findOne({ email: email });
-    userResult?.get("password", null, { getters: false });
+    const userResult = await this.user
+      .findOne({ email: email })
+      .select("+password");
     return userResult;
   };
 

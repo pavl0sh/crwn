@@ -35,6 +35,7 @@ class AuthService {
         logInData.password,
         user.password
       );
+      user.password = undefined;
       if (isPaswordMatching) {
         const tokenData = this.createToken(user);
         const cookie = this.createCookie(tokenData);

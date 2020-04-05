@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
     lastName: String,
     password: {
       type: String,
-      get: (): undefined => undefined
+      select: false
     },
     role: {
       type: String,
