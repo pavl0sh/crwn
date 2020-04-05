@@ -7,7 +7,7 @@ function validationMiddleware<T>(
   type: any,
   skipMissingProperties = false
 ): RequestHandler {
-  return (req, res, next) => {
+  return (req, res, next): void => {
     validate(plainToClass(type, req.body), { skipMissingProperties }).then(
       (errors: ValidationError[]) => {
         if (errors.length > 0) {

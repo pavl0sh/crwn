@@ -1,5 +1,5 @@
 import RequestWithUser from "../interfaces/requestWithUser.interface";
-import { NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../interfaces/dataStoredInToken";
 import UserService from "../services/user.service";

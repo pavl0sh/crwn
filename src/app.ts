@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import errorMiddleware from "./middleware/error.middleware";
 import Controller from "./interfaces/controller.interface";
 import DbConnection from "./interfaces/dbConnection.interface";
@@ -21,6 +22,7 @@ class App {
   }
 
   private initializeMiddleware(): void {
+    this.app.use(cors());
     this.app.use(bodyParser.json({ limit: "1mb" }));
     this.app.use(
       bodyParser.urlencoded({

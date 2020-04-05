@@ -8,6 +8,7 @@ import TokenData from "../interfaces/tokenData.interface";
 import LogInDto from "../dto/logIn.dto";
 import WrongCredsException from "../middleware/exceptions/WrongCredsExceptions";
 import AuthResult from "../interfaces/authResult.interface";
+import DataStoredInToken from "../interfaces/dataStoredInToken";
 
 class AuthService {
   private userService = new UserService();
@@ -18,6 +19,7 @@ class AuthService {
       throw new UserWithThatEmailAlreadyExistsException(userData.email);
     }
     const hashedPassword = await bcrypt.hash(userData.password, 10);
+    userData.role = userData.role || "basic";
     const user = await this.userService.createUser(userData, hashedPassword);
     const token = this.createToken(user);
     const cookie = this.createCookie(token);
@@ -48,7 +50,7 @@ class AuthService {
   private createToken(user: User): TokenData {
     const expiresIn = 60 * 60; //hour
     const secret = process.env.JWT_SECRET;
-    const dataStoredInToken = {
+    const dataStoredInToken: DataStoredInToken = {
       _id: user._id
     };
     return {

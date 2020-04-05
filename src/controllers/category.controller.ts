@@ -5,6 +5,8 @@ import CategoryNotFoundException from "../middleware/exceptions/CategoryNotFound
 import Category from "../interfaces/category.interface";
 import CreateCategoryDto from "../dto/category.dto";
 import validationMiddleware from "../middleware/validation.middleware";
+import authMiddleware from "../middleware/auth.middleware";
+import roleMiddleware from "../middleware/role.middleware";
 
 class CategoryController implements Controller {
   public path = "/categories";
@@ -20,15 +22,24 @@ class CategoryController implements Controller {
     this.router.get(`${this.path}/:id`, this.getCategoryById);
     this.router.patch(
       `${this.path}/:id`,
+      authMiddleware,
+      roleMiddleware(["admin", "supervisor"]),
       validationMiddleware(CreateCategoryDto, true),
       this.updateCategory
     );
     this.router.post(
       `${this.path}`,
+      authMiddleware,
+      roleMiddleware(["admin", "supervisor"]),
       validationMiddleware(CreateCategoryDto),
       this.createCategory
     );
-    this.router.delete(`${this.path}/:id`, this.deleteCategory);
+    this.router.delete(
+      `${this.path}/:id`,
+      authMiddleware,
+      roleMiddleware(["admin"]),
+      this.deleteCategory
+    );
   }
 
   private getAllCategories = async (response: Response): Promise<void> => {
@@ -81,7 +92,7 @@ class CategoryController implements Controller {
     request: Request,
     response: Response,
     next: NextFunction
-  ): Promise<void> =>  {
+  ): Promise<void> => {
     const id = request.params.id;
     try {
       const result = await this.categoryService.deleteCategory(id);

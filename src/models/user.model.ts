@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       get: (): undefined => undefined
     },
+    role: {
+      type: String,
+      default: "basic",
+      enum: ["basic", "supervisor", "admin"]
+    },
     address: addressSchema
   },
   {
