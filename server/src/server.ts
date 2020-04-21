@@ -11,7 +11,6 @@ const app = new App(
     new UserController(),
     new ExampleController()
   ],
-  5000,
   new MongoDbConnection()
 );
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "start": "node build/app.js",
+    "start": "node build/server.js",
     "build": "tsc -p ."
   },
   "author": "Pavlo Shvoruk",

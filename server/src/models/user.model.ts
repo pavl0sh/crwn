@@ -9,10 +9,10 @@ const addressSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema(
   {
-    username: String,
-    email: String,
-    firstName: String,
-    lastName: String,
+    username: { type: String, maxlength: 250 },
+    email: { type: String, maxlength: 250 },
+    firstName: { type: String, maxlength: 100 },
+    lastName: { type: String, maxlength: 100 },
     password: {
       type: String,
       select: false

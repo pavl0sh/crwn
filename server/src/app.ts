@@ -7,12 +7,10 @@ import DbConnection from "./interfaces/dbConnection.interface";
 
 class App {
   public app: express.Application;
-  public port: number;
   public db: DbConnection;
 
-  constructor(controllers: Controller[], port: number, db: DbConnection) {
+  constructor(controllers: Controller[], db: DbConnection) {
     this.app = express();
-    this.port = port;
     this.db = db;
 
     this.db.connect();
@@ -44,8 +42,8 @@ class App {
   }
 
   public listen(): void {
-    this.app.listen(this.port, () => {
-      console.log(`App listening on the port ${this.port}`);
+    this.app.listen(process.env.PORT, () => {
+      console.log(`App listening on the port ${process.env.PORT}`);
     });
   }
 }
