@@ -1,5 +1,5 @@
 import userModel from "../models/user.model";
-import User from "../interfaces/user.interface";
+import User from "../types/user.interface";
 import CreateUserDto from "../dto/user.dto";
 import toObjectId from "../helpers/mongoose.helper";
 

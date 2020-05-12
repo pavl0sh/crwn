@@ -1,12 +1,13 @@
-import Controller from "../interfaces/controller.interface";
+import Controller from "../types/controller.interface";
 import { Router, Request, Response, NextFunction } from "express";
 import CategoryService from "../services/category.service";
 import CategoryNotFoundException from "../middleware/exceptions/CategoryNotFoundException";
-import Category from "../interfaces/category.interface";
+import Category from "../types/category.interface";
 import CreateCategoryDto from "../dto/category.dto";
 import validationMiddleware from "../middleware/validation.middleware";
 import authMiddleware from "../middleware/auth.middleware";
 import roleMiddleware from "../middleware/role.middleware";
+import Role from "../types/role.enum";
 
 class CategoryController implements Controller {
   public path = "/categories";
@@ -23,21 +24,21 @@ class CategoryController implements Controller {
     this.router.patch(
       `${this.path}/:id`,
       authMiddleware,
-      roleMiddleware(["admin", "supervisor"]),
+      roleMiddleware([Role.Admin, Role.Supervisor]),
       validationMiddleware(CreateCategoryDto, true),
       this.updateCategory
     );
     this.router.post(
       `${this.path}`,
       authMiddleware,
-      roleMiddleware(["admin", "supervisor"]),
+      roleMiddleware([Role.Admin, Role.Supervisor]),
       validationMiddleware(CreateCategoryDto),
       this.createCategory
     );
     this.router.delete(
       `${this.path}/:id`,
       authMiddleware,
-      roleMiddleware(["admin"]),
+      roleMiddleware([Role.Admin]),
       this.deleteCategory
     );
   }

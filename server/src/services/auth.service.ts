@@ -1,14 +1,14 @@
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import User from "../interfaces/user.interface";
+import User from "../types/user.interface";
 import CreateUserDto from "../dto/user.dto";
 import UserService from "./user.service";
 import UserWithThatEmailAlreadyExistsException from "../middleware/exceptions/UserWithThatEmailAlreadyExistsException";
-import TokenData from "../interfaces/tokenData.interface";
+import TokenData from "../types/tokenData.interface";
 import LogInDto from "../dto/logIn.dto";
 import WrongCredsException from "../middleware/exceptions/WrongCredsExceptions";
-import AuthResult from "../interfaces/authResult.interface";
-import DataStoredInToken from "../interfaces/dataStoredInToken";
+import AuthResult from "../types/authResult.interface";
+import DataStoredInToken from "../types/dataStoredInToken";
 
 class AuthService {
   private userService = new UserService();

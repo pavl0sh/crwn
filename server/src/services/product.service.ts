@@ -1,7 +1,6 @@
 import productModel from "../models/product.model";
 import CreateProductDto from "../dto/product.dto";
-import Product from "../interfaces/product.interface";
-import Category from "../interfaces/category.interface";
+import Product from "../types/product.interface";
 import ProductNotFoundException from "../middleware/exceptions/ProductNotFoundException";
 import toObjectId from "../helpers/mongoose.helper";
 import CategoryNotFoundException from "../middleware/exceptions/CategoryNotFoundException";
@@ -10,12 +9,10 @@ class ProductService {
   private product = productModel;
 
   public getAllProductsByCategory = async (
-    categoryData: Category
+    catId: string
   ): Promise<Product[] | CategoryNotFoundException> => {
-    const catId = categoryData._id;
     try {
-      const result = await this.product.find({ category: toObjectId(catId) });
-      return result;
+      return await this.product.find({ category: toObjectId(catId) });
     } catch (error) {
       throw new CategoryNotFoundException(catId);
     }
@@ -25,16 +22,14 @@ class ProductService {
     id: string
   ): Promise<Product | null | ProductNotFoundException> => {
     try {
-      const result: Product | null = await this.product.findById(
-        toObjectId(id)
-      );
-      return result;
+      return await this.product.findById(toObjectId(id));
     } catch (error) {
       throw new ProductNotFoundException(id);
     }
   };
 
   public updateProduct = async (
+    id: string,
     productData: Product
   ): Promise<Product | ProductNotFoundException> => {
     const result = await this.product.findByIdAndUpdate(
@@ -50,23 +45,19 @@ class ProductService {
   };
 
   public createProduct = async (
-    productData: CreateProductDto,
-    categoryData: Category
+    productData: CreateProductDto
   ): Promise<Product> => {
     const createdProduct = new this.product({
-      ...productData,
-      category: categoryData._id
+      ...productData
     });
-    const savedProduct = await createdProduct.save();
-    return savedProduct;
+    return await createdProduct.save();
   };
 
   public deleteProduct = async (
     id: string
   ): Promise<Product | null | ProductNotFoundException> => {
     try {
-      const result = await this.product.findByIdAndDelete(toObjectId(id));
-      return result;
+      return await this.product.findByIdAndDelete(toObjectId(id));
     } catch (error) {
       throw new ProductNotFoundException(id);
     }

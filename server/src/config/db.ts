@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import DbConnection from "../interfaces/dbConnection.interface";
+import DbConnection from "../types/dbConnection.interface";
 
 class MongoDbConnection implements DbConnection {
   connect(): void {

@@ -2,8 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import errorMiddleware from "./middleware/error.middleware";
-import Controller from "./interfaces/controller.interface";
-import DbConnection from "./interfaces/dbConnection.interface";
+import Controller from "./types/controller.interface";
+import DbConnection from "./types/dbConnection.interface";
 
 class App {
   public app: express.Application;

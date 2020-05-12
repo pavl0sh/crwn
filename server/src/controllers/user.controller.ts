@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import Controller from "../interfaces/controller.interface";
+import Controller from "../types/controller.interface";
 import UserService from "../services/user.service";
 import UserNotFoundException from "../middleware/exceptions/UserNotFoundException";
 

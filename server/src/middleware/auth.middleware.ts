@@ -1,7 +1,7 @@
-import RequestWithUser from "../interfaces/requestWithUser.interface";
+import RequestWithUser from "../types/requestWithUser.interface";
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import DataStoredInToken from "../interfaces/dataStoredInToken";
+import DataStoredInToken from "../types/dataStoredInToken";
 import UserService from "../services/user.service";
 import WrongAuthenticationTokenException from "./exceptions/WrongAuthenticationTokenException";
 import AuthenticationTokenMissingException from "./exceptions/AuthenticationTokenMissingException";

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, Router } from "express";
-import Controller from "../interfaces/controller.interface";
+import Controller from "../types/controller.interface";
 import CreateUserDto from "../dto/user.dto";
 import AuthService from "../services/auth.service";
 import validationMiddleware from "../middleware/validation.middleware";
-import AuthResult from "../interfaces/authResult.interface";
+import AuthResult from "../types/authResult.interface";
 import LogInDto from "../dto/logIn.dto";
 
 class AuthenticationController implements Controller {

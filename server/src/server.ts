@@ -3,13 +3,15 @@ import App from "./app";
 import MongoDbConnection from "./config/db";
 import AuthenticationController from "./controllers/auth.controller";
 import UserController from "./controllers/user.controller";
-import ExampleController from "./controllers/example.controller";
+import CategoryController from "./controllers/category.controller";
+import ProductController from "./controllers/product.controller";
 
 const app = new App(
   [
     new AuthenticationController(),
     new UserController(),
-    new ExampleController()
+    new ProductController(),
+    new CategoryController()
   ],
   new MongoDbConnection()
 );

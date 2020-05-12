@@ -1,4 +1,4 @@
-import RequestWithUser from "../interfaces/requestWithUser.interface";
+import RequestWithUser from "../types/requestWithUser.interface";
 import { NextFunction, Response } from "express";
 import HttpException from "./exceptions/HttpException";
 

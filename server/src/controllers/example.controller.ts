@@ -1,6 +1,6 @@
 import express from "express";
-import Example from "../interfaces/example.interface";
-import Controller from "../interfaces/controller.interface";
+import Example from "../types/example.interface";
+import Controller from "../types/controller.interface";
 
 class ExampleController implements Controller {
   public path = "/example";
